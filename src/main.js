@@ -4,6 +4,8 @@ import router from "./router";
 import store from "./store";
 import firebase from "firebase";
 
+require("firebase/firestore");
+
 var firebaseConfig = {
   apiKey: "AIzaSyDs2zfDy1pG5pKmBZJJWTggP7yzBKsCYN4",
   authDomain: "vue-chat-8f583.firebaseapp.com",
@@ -14,6 +16,12 @@ var firebaseConfig = {
   appId: "1:439310740690:web:a57751f788b7121f08510b"
 };
 firebase.initializeApp(firebaseConfig);
+
+var db = firebase.firestore();
+window.db = db;
+db.settings({
+  timestampsInSnapshots: true
+});
 
 Vue.config.productionTip = false;
 
