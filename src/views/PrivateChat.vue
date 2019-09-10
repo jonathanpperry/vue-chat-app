@@ -143,10 +143,11 @@
         </div>
         <div class="mesgs">
           <div class="msg_history">
-            <div v-for="message in messages" class="incoming_msg">
-              <div class="received_msg">
+            <div v-for="message in messages">
+              <div :class="[message.author===authUser.displayName?'sent_msg':'received_msg']">
                 <div class="received_withd_msg">
                   <p>{{message.message}}</p>
+                  <span class="time_date">{{message.author}}</span>
                 </div>
               </div>
             </div>
@@ -172,24 +173,36 @@
 </template>
 
 <script>
+import firebase from "firebase";
 // @ is an alias to /src
 import HelloWorld from "@/components/HelloWorld.vue";
+import { setTimeout } from "timers";
 
 export default {
   name: "PrivateChat",
   data() {
     return {
       message: null,
-      messages: []
+      messages: [],
+      authUser: {}
     };
   },
   methods: {
+    scrollToBottom() {
+      let box = document.querySelector(".msg_history");
+      box.scrollTop = box.scrollHeight;
+    },
     saveMessage() {
       // Save to Firestore
-      db.collection("chat").add({
-        message: this.message,
-        createdAt: new Date()
-      });
+      db.collection("chat")
+        .add({
+          message: this.message,
+          author: this.authUser.displayName,
+          createdAt: new Date()
+        })
+        .then(() => {
+          this.scrollToBottom();
+        });
       this.message = null;
     },
     fetchMessages() {
@@ -201,11 +214,33 @@ export default {
             allMessages.push(doc.data);
           });
           this.messages = allMessages;
+          setTimeout(() => {
+            this.scrollToBottom();
+          }, 1000);
         });
     }
   },
   created() {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.authUser = user;
+      } else {
+        this.authUser = {};
+      }
+    });
     this.fetchMessages();
+  },
+
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          next();
+        } else {
+          this.$router.push("/login");
+        }
+      });
+    });
   }
 };
 </script>
@@ -363,8 +398,8 @@ img {
   margin: 26px 0 26px;
 }
 .sent_msg {
-  float: right;
   width: 46%;
+  padding: 10px;
 }
 .input_msg_write input {
   background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
