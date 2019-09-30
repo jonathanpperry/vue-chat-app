@@ -19,9 +19,7 @@ firebase.initializeApp(firebaseConfig);
 
 var db = firebase.firestore();
 window.db = db;
-db.settings({
-  timestampsInSnapshots: true
-});
+
 
 Vue.config.productionTip = false;
 

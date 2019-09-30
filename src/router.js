@@ -12,7 +12,12 @@ export default new Router({
   routes: [
     {
       path: "/",
-      name: "home",
+      name: "login",
+      component: Login
+    },
+    {
+      path: "/chat",
+      name: "chat",
       component: PrivateChat
     },
     {

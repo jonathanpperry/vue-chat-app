@@ -211,7 +211,7 @@ export default {
         .onSnapshot(querySnapshot => {
           let allMessages = [];
           querySnapshot.forEach(doc => {
-            allMessages.push(doc.data);
+            allMessages.push(doc.data());
           });
           this.messages = allMessages;
           setTimeout(() => {
