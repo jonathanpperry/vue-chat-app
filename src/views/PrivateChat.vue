@@ -41,28 +41,31 @@
         </div>
         <div class="mesgs">
           <div class="msg_history">
-            <div v-for="message in messages" v-bind:key="message.id"
-              <div :class="[message.author===authUser.displayName?'sent_msg' : 'received_msg']">
-                <div class="received_withd_msg">
-                  <p>{{message.message}}</p>
-                  <span class="time_date">{{message.author}}</span>
-                </div>
+            <div
+              v-for="message in messages"
+              v-bind:key="message.id"
+              &#x26;#x26;#x3C;div
+              :class="[message.author===authUser.displayName?'sent_msg' : 'received_msg']"
+            >
+              <div class="received_withd_msg">
+                <p>{{message.message}}</p>
+                <span class="time_date">{{message.author}}</span>
               </div>
             </div>
           </div>
-          <div class="type_msg">
-            <div class="input_msg_write">
-              <input
-                @keyup.enter="saveMessage"
-                v-model="message"
-                type="text"
-                class="write_msg"
-                placeholder="Type a message"
-              />
-              <button class="msg_send_btn" type="button">
-                <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
-              </button>
-            </div>
+        </div>
+        <div class="type_msg">
+          <div class="input_msg_write">
+            <input
+              @keyup.enter="saveMessage"
+              v-model="message"
+              type="text"
+              class="write_msg"
+              placeholder="Type a message"
+            />
+            <button class="msg_send_btn" type="button">
+              <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+            </button>
           </div>
         </div>
       </div>
@@ -175,7 +178,7 @@ img {
   display: inline-block;
   text-align: right;
   width: 60%;
-  padding: ;
+  padding: 10px;
 }
 .headind_srch {
   padding: 10px 29px 10px 20px;
