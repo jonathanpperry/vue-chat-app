@@ -44,7 +44,6 @@
             <div
               v-for="message in messages"
               v-bind:key="message.id"
-              &#x26;#x26;#x3C;div
               :class="[message.author===authUser.displayName?'sent_msg' : 'received_msg']"
             >
               <div class="received_withd_msg">
